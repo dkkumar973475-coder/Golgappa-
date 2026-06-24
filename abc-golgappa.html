@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABC Golgappa – Mahoba, UP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brown-dark:  #4A2C0A;
+      --brown-mid:   #7B4A1E;
+      --brown-light: #B5722A;
+      --yellow-hot:  #F5C518;
+      --yellow-soft: #FDE89A;
+      --yellow-pale: #FFF8E7;
+      --cream:       #FEFAF2;
+      --text-dark:   #2C1A06;
+      --text-mid:    #5C3D1A;
+      --white:       #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Baloo 2', 'Noto Sans Devanagari', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: var(--brown-dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      box-shadow: 0 3px 18px rgba(74,44,10,0.5);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .logo-circle {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--yellow-hot);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .logo-text { color: var(--yellow-hot); font-size: 1.4rem; font-weight: 800; letter-spacing: 0.5px; }
+    .logo-sub  { color: var(--yellow-soft); font-size: 0.7rem; display: block; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; margin-top: -4px; }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--yellow-soft); text-decoration: none;
+      font-weight: 600; font-size: 0.95rem; letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow-hot); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 3px; background: var(--yellow-hot); border-radius: 3px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-mid) 55%, var(--brown-light) 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 5% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(245,197,24,0.12) 0%, transparent 65%);
+    }
+    .hero-dots {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(245,197,24,0.15) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow-hot);
+      color: var(--brown-dark);
+      font-size: 0.8rem; font-weight: 700;
+      padding: 6px 18px; border-radius: 30px;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeDown 0.6s ease both;
+    }
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 10px;
+      animation: fadeDown 0.7s 0.1s ease both;
+    }
+    .hero h1 span { color: var(--yellow-hot); }
+    .hero-tagline {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--yellow-soft);
+      margin-bottom: 36px;
+      animation: fadeDown 0.7s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeDown 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--yellow-hot); color: var(--brown-dark);
+      padding: 14px 36px; border-radius: 50px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(245,197,24,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(245,197,24,0.5); }
+    .btn-outline {
+      background: transparent; color: var(--yellow-hot);
+      padding: 13px 36px; border-radius: 50px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none; border: 2px solid var(--yellow-hot);
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: var(--yellow-hot); color: var(--brown-dark); }
+
+    .hero-emojis {
+      margin-top: 48px;
+      display: flex; gap: 20px; justify-content: center;
+      font-size: 3rem;
+      animation: fadeDown 0.7s 0.4s ease both;
+    }
+    .hero-emojis span { animation: bounce 2s infinite; display: inline-block; }
+    .hero-emojis span:nth-child(2) { animation-delay: 0.3s; }
+    .hero-emojis span:nth-child(3) { animation-delay: 0.6s; }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 90px 5%; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--brown-light);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; color: var(--brown-dark);
+      margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-title span { color: var(--brown-light); }
+    .section-desc {
+      font-size: 1.05rem; color: var(--text-mid);
+      max-width: 560px; line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .divider {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--yellow-hot), var(--brown-light));
+      border-radius: 4px; margin: 14px 0 24px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto;
+    }
+    .about-visual {
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));
+      border-radius: 24px;
+      height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7rem;
+      position: relative; overflow: hidden;
+    }
+    .about-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 60% 60%, rgba(245,197,24,0.2) 0%, transparent 70%);
+    }
+    .about-emoji { position: relative; z-index: 1; animation: float 3s ease-in-out infinite; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 32px;
+    }
+    .stat-card {
+      background: var(--yellow-pale);
+      border-radius: 16px; padding: 20px;
+      border-left: 4px solid var(--yellow-hot);
+    }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--brown-dark); }
+    .stat-label { font-size: 0.85rem; color: var(--text-mid); font-weight: 600; }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--yellow-pale); }
+    .products-header { text-align: center; }
+    .products-header .section-desc { margin: 0 auto 48px; }
+    .products-header .divider { margin: 14px auto 24px; }
+
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px; max-width: 1100px; margin: 0 auto;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(74,44,10,0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(74,44,10,0.18); }
+    .card-top {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+    .card-top.golgappa { background: linear-gradient(135deg, #4A2C0A, #7B4A1E); }
+    .card-top.tikiya   { background: linear-gradient(135deg, #6B3A15, #B5722A); }
+    .card-top.samosa   { background: linear-gradient(135deg, #3D1F08, #5C3D1A); }
+    .card-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--yellow-hot); color: var(--brown-dark);
+      font-size: 0.7rem; font-weight: 700; padding: 4px 10px;
+      border-radius: 20px; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .card-body { padding: 24px; }
+    .card-name { font-size: 1.35rem; font-weight: 800; color: var(--brown-dark); margin-bottom: 8px; }
+    .card-desc { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 16px; }
+    .card-features { display: flex; flex-wrap: wrap; gap: 8px; }
+    .feature-tag {
+      background: var(--yellow-soft); color: var(--brown-mid);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+    }
+
+    /* ── WHY US ── */
+    #why { background: var(--brown-dark); }
+    .why-header { text-align: center; }
+    .why-header .section-title { color: var(--white); }
+    .why-header .section-label { color: var(--yellow-hot); }
+    .why-header .section-desc { color: var(--yellow-soft); margin: 0 auto 48px; }
+    .why-header .divider { margin: 14px auto 24px; background: linear-gradient(90deg, var(--yellow-hot), transparent); }
+
+    .why-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px; max-width: 1000px; margin: 0 auto;
+    }
+    .why-card {
+      background: rgba(245,197,24,0.08);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 20px; padding: 32px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .why-card:hover { background: rgba(245,197,24,0.15); }
+    .why-icon { font-size: 2.8rem; margin-bottom: 16px; }
+    .why-title { font-size: 1.1rem; font-weight: 700; color: var(--yellow-hot); margin-bottom: 8px; }
+    .why-text  { font-size: 0.88rem; color: var(--yellow-soft); line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start; max-width: 1000px; margin: 0 auto;
+    }
+    .contact-info { }
+    .info-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 28px;
+    }
+    .info-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--yellow-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .info-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; color: var(--brown-light); margin-bottom: 4px; }
+    .info-value { font-size: 1rem; font-weight: 600; color: var(--brown-dark); }
+    .info-value a { color: var(--brown-dark); text-decoration: none; }
+    .info-value a:hover { color: var(--brown-light); }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: 24px; padding: 36px;
+      box-shadow: 0 4px 28px rgba(74,44,10,0.1);
+    }
+    .form-title { font-size: 1.3rem; font-weight: 800; color: var(--brown-dark); margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-mid); margin-bottom: 6px; }
+    input, textarea, select {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #E8D5B7; border-radius: 12px;
+      font-family: inherit; font-size: 0.95rem;
+      color: var(--text-dark); background: var(--cream);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--yellow-hot); }
+    textarea { height: 120px; resize: vertical; }
+    .btn-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));
+      color: var(--yellow-hot); font-size: 1rem; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(74,44,10,0.3);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,44,10,0.4); }
+
+    /* ── MAP STRIP ── */
+    .map-strip {
+      background: var(--brown-mid);
+      padding: 28px 5%;
+      text-align: center;
+    }
+    .map-strip p { color: var(--yellow-soft); font-size: 1rem; }
+    .map-strip strong { color: var(--yellow-hot); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown-dark);
+      padding: 40px 5%;
+      text-align: center;
+    }
+    .footer-logo { font-size: 1.6rem; font-weight: 800; color: var(--yellow-hot); margin-bottom: 12px; }
+    .footer-tagline { color: var(--yellow-soft); font-size: 0.9rem; margin-bottom: 20px; }
+    .footer-links { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-links a { color: var(--yellow-soft); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--yellow-hot); }
+    .footer-copy { color: rgba(253,232,154,0.4); font-size: 0.8rem; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-14px) rotate(5deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; background: var(--brown-dark); position: absolute; top: 68px; left: 0; right: 0; padding: 20px 5%; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-visual { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">
+    <div class="logo-circle">🫙</div>
+    <div>
+      <div class="logo-text">ABC Golgappa</div>
+      <span class="logo-sub">Mahoba, UP</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌶️ Mahoba ka Swad</div>
+    <h1>Asli <span>Golgappe</span><br/>Ghar Jaisi Taste</h1>
+    <p class="hero-tagline">Chatpati Aalu Tikiya • Paani Puri • Khasta Samosa<br/>Mahoba, Uttar Pradesh ka sabse pasandida street food</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Hamare Products Dekhein</a>
+      <a href="#contact" class="btn-outline">Order Karein</a>
+    </div>
+    <div class="hero-emojis">
+      <span>🫙</span>
+      <span>🥔</span>
+      <span>🌶️</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <span class="about-emoji">🫙</span>
+    </div>
+    <div>
+      <span class="section-label">Hamari Kahani</span>
+      <h2 class="section-title">ABC <span>Golgappa</span> ke baare mein</h2>
+      <div class="divider"></div>
+      <p class="section-desc">
+        Mahoba, Uttar Pradesh mein humara naam golgappe aur street food ka paryay ban gaya hai. 
+        Har puri mein bharti hai asli masalon ki khushboo, taaza paani ka swad aur dil ka pyar.
+        Generations se hum apni family recipe ke saath logo ke dil mein jagah bana rahe hain.
+      </p>
+      <p style="color:var(--text-mid); font-size:0.95rem; line-height:1.7; margin-bottom:28px;">
+        Hamare yahan Golgappa, Aalu Tikiya aur Samosa bilkul ghar jaisi recipe se tayar hote hain — 
+        saaf safai ke saath, taaze masalon se. Hum sirf khana nahi, ek anubhav dete hain.
+      </p>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Khush Customers Rozana</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Asli Recipes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Taaza Ingredients</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Mahoba</div>
+          <div class="stat-label">Ka No.1 Street Food</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header">
+    <span class="section-label">Hamara Menu</span>
+    <h2 class="section-title">Hamare <span>Swadisht Products</span></h2>
+    <div class="divider"></div>
+    <p class="section-desc">Teen asli recipes jo aapko baar baar bulayengi — chatpati, masaledar aur bilkul fresh.</p>
+  </div>
+  <div class="products-grid">
+
+    <!-- Golgappa -->
+    <div class="product-card">
+      <div class="card-top golgappa">
+        <span>🫙</span>
+        <div class="card-badge">Best Seller</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Golgappa (Paani Puri)</div>
+        <p class="card-desc">
+          Khasta puri mein bharein taaze aalu, imli ka paani aur teekhi chutney. Ek bite mein puri duniya ka swad. Humare golgappe Mahoba mein sabse famous hain!
+        </p>
+        <div class="card-features">
+          <span class="feature-tag">🌶️ Teekha</span>
+          <span class="feature-tag">🥔 Aalu Bhara</span>
+          <span class="feature-tag">💧 Meetha Paani bhi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aalu Tikiya -->
+    <div class="product-card">
+      <div class="card-top tikiya">
+        <span>🥔</span>
+        <div class="card-badge">Must Try</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Aalu Tikiya</div>
+        <p class="card-desc">
+          Bahar se crispy, andar se naram aalu ki tikiya — upar se tamarind chutney, hari chutney aur chatpata masala. Ghar jaisi taste, bazaar ka maza!
+        </p>
+        <div class="card-features">
+          <span class="feature-tag">🔥 Crispy</span>
+          <span class="feature-tag">🫙 Chutney Ke Saath</span>
+          <span class="feature-tag">✅ Fresh Daily</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Samosa -->
+    <div class="product-card">
+      <div class="card-top samosa">
+        <span>🥟</span>
+        <div class="card-badge">Classic</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Samosa</div>
+        <p class="card-desc">
+          Khasta maida ki khandar mein bhari masaledar aalu-matar ki filling. Garam garam samosa aur hari chutney — ek aisi jodi jo kabhi purani nahi padti.
+        </p>
+        <div class="card-features">
+          <span class="feature-tag">🥟 Khasta</span>
+          <span class="feature-tag">🟢 Hari Chutney</span>
+          <span class="feature-tag">🌿 Pure Veg</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-header">
+    <span class="section-label">Kyun Chunein Hume</span>
+    <h2 class="section-title">ABC Golgappa Kyun Khaas Hai?</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Sirf khana nahi, hum dete hain ek yaadgaar anubhav.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🌿</div>
+      <div class="why-title">100% Taaza</div>
+      <p class="why-text">Roz taaze ingredients se khana tayyar hota hai. Koi preservative nahi, koi compromise nahi.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">👨‍🍳</div>
+      <div class="why-title">Asli Recipe</div>
+      <p class="why-text">Hamare masale aur recipes pushtaini hain — jo swad ghar yaad dilaye, wahi swad aapko milega.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🧹</div>
+      <div class="why-title">Saaf Safai</div>
+      <p class="why-text">Puri saaf safai ke saath khana banaya jata hai. Swasth khao, khush raho.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💛</div>
+      <div class="why-title">Dil Se Seva</div>
+      <p class="why-text">Har customer hamare liye khaas hai. Satisfaction guarantee ke saath seva karte hain.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="text-align:center; max-width:600px; margin:0 auto 60px;">
+    <span class="section-label">Sampark Karein</span>
+    <h2 class="section-title">Order ya <span>Sampark</span> Karein</h2>
+    <div class="divider" style="margin:14px auto 24px;"></div>
+    <p class="section-desc" style="margin:0 auto;">Golgappa order karna ho ya kuch poochna ho — hum hamesha available hain!</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Phone / Call</div>
+          <div class="info-value"><a href="tel:7288973475">7288973475</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📧</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value"><a href="mailto:dkkumar973475@gmail.com">dkkumar973475@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">Mahoba, Uttar Pradesh</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div>
+          <div class="info-label">Timing</div>
+          <div class="info-value">Subah 9 Baje – Raat 10 Baje</div>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid)); border-radius:20px; padding:24px; margin-top:8px;">
+        <p style="color:var(--yellow-hot); font-weight:700; font-size:1rem; margin-bottom:8px;">🛵 Home Delivery Available!</p>
+        <p style="color:var(--yellow-soft); font-size:0.9rem; line-height:1.6;">Mahoba mein ghar baithke order karein. Hum delivery karte hain — call ya message karein!</p>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-title">📋 Order / Message Bhejein</div>
+      <div class="form-group">
+        <label>Aapka Naam</label>
+        <input type="text" placeholder="Naam likhein..."/>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="Mobile number..."/>
+      </div>
+      <div class="form-group">
+        <label>Kya Chahiye?</label>
+        <select>
+          <option value="">-- Select karein --</option>
+          <option>Golgappa Order</option>
+          <option>Aalu Tikiya Order</option>
+          <option>Samosa Order</option>
+          <option>Mixed Order</option>
+          <option>Kuch Poochna Hai</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message / Order Details</label>
+        <textarea placeholder="Quantity, address, ya koi sawaal likhein..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="sendOrder()">🌶️ Order / Message Send Karein</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP STRIP -->
+<div class="map-strip">
+  <p>📍 Humein dhundhein: <strong>Mahoba, Uttar Pradesh</strong> — <strong>Call: 7288973475</strong> | <strong>Email: dkkumar973475@gmail.com</strong></p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🫙 ABC Golgappa</div>
+  <p class="footer-tagline">Mahoba ka Asli Swad — Golgappa • Aalu Tikiya • Samosa</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:7288973475">📞 Call Now</a>
+  </div>
+  <p class="footer-copy">© 2025 ABC Golgappa, Mahoba, Uttar Pradesh. All rights reserved.</p>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  // Close nav on link click (mobile)
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  function sendOrder() {
+    alert('Shukriya! Aapka order/message bhej diya gaya hai. Hum jald aapse sampark karenge! 😊\n\nPhone: 7288973475');
+  }
+
+  // Scroll-based nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) cur = s.id; });
+    navAs.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--yellow-hot)' : '';
+    });
+  });
+</script>
+</body>
+</html>
